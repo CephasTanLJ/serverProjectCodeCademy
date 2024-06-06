@@ -15,6 +15,18 @@ const retreiveAllQuotes = (name, arr) =>{
   return quoteArr;
 }
 
+const retrieveAllAuthors = (arr) => {
+  const authorsSet = new Set([]);
+
+  arr.forEach(itemObj => {
+    authorsSet.add(itemObj.person)
+  });
+
+  const authorsArray = Array.from(authorsSet);
+
+  return authorsArray;
+}
+
 const postData = (quote, person, arr) => {
   arr.push({"quote": quote, "person": person});
 } 
@@ -22,5 +34,6 @@ const postData = (quote, person, arr) => {
 module.exports = {
   retreiveAllQuotes,
   getRandomElement,
-  postData
+  postData,
+  retrieveAllAuthors
 };
