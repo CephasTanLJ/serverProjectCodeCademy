@@ -72,7 +72,11 @@ fetchRandomButton.addEventListener('click', () => {
 });
 
 fetchByAuthorButton.addEventListener('click', () => {
-  const author = document.getElementById('author').value;
+  let author = document.getElementById('author').value;
+  if (author===""){
+    author = "NIL"
+  }
+
   fetch(`/api/quotes?person=${author}`)
   .then(response => {
     if (response.ok) {
@@ -82,6 +86,16 @@ fetchByAuthorButton.addEventListener('click', () => {
     }
   })
   .then(response => {
-    renderQuotes([response]);
+    if (author === "NIL"){
+      renderQuotes([{quote:`Please enter one of these author's name: </br>"${response.authors.join("</br>")}"`, person: ""}]);
+    } else if (response.quote.length === 0){
+      renderQuotes([{quote:`<strong><i>${response.person}
+      </i></strong> does not exits in our database...</br>
+      Please enter one of these author's name: </br>${response.authors.join("</br>")}`,
+      person:""
+    }])
+    }else {
+      renderQuotes([response]);
+    }
   });
 });
