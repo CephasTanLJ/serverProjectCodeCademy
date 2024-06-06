@@ -87,7 +87,7 @@ fetchByAuthorButton.addEventListener('click', () => {
   })
   .then(response => {
     if (author === "NIL"){
-      renderQuotes([{quote:`Please enter one of these author's name: </br>"${response.authors.join("</br>")}"`, person: ""}]);
+      renderQuotes([{quote:`Please enter one of these author's name: </br>${response.authors.join("</br>")}`, person: ""}]);
     } else if (response.quote.length === 0){
       renderQuotes([{quote:`<strong><i>${response.person}
       </i></strong> does not exits in our database...</br>

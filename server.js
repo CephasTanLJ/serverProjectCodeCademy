@@ -15,7 +15,7 @@ apiQuoteRouter.get("/", (req, res, next) =>{
 
     const person = req.query.person;
 
-    console.log(person);
+    // console.log(person);
 
     if (quotes) {
         if (person && person !== "NIL"){
@@ -54,7 +54,7 @@ apiQuoteRouter.post("/", (req, res, next) =>{
 
         //Verify the quotes array have been updated
         const allQuote = retreiveAllQuotes(personName, quotes)
-        res.status(201).send({quote: allQuote.slice(allQuote.length - 1)[0]});
+        res.status(201).send({quote: allQuote.slice(allQuote.length - 1)[0], person: personName});
     } else {
         res.status(400).send("Something went wrong"); 
     }
