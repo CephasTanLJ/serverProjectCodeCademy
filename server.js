@@ -5,7 +5,7 @@ const apiQuoteRouter = express.Router();
 app.use("/api/quotes", apiQuoteRouter)
 
 const { quotes } = require('./data');
-const { getRandomElement, retreiveAllQuotes, postData } = require('./utils');
+const { getRandomElement, retreiveAllQuotes, postData, retrieveAllAuthors } = require('./utils');
 
 const PORT = process.env.PORT || 4001;
 
@@ -15,11 +15,19 @@ apiQuoteRouter.get("/", (req, res, next) =>{
 
     const person = req.query.person;
 
+    console.log(person);
+
     if (quotes) {
-        if (person){
+        if (person && person !== "NIL"){
             let arrOfQuotes = retreiveAllQuotes(person, quotes);
-            res.status(200).send({"quote": arrOfQuotes, "person": person});
-        } else {
+            if (arrOfQuotes.length){
+                res.status(200).send({"quote": arrOfQuotes, "person": person});
+            } else {
+                res.status(202).send({"quote": arrOfQuotes, "person": person, authors: retrieveAllAuthors(quotes)});
+            }
+        } else if (person === "NIL"){
+            res.status(201).send({"quote":"", "authors":retrieveAllAuthors(quotes)})
+        }else {
             res.status(200).send({quotes});
         }
         
